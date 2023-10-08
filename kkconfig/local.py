@@ -12,9 +12,18 @@ def load_settings(cfgpath, env):
 
     If `cfgpath` does not exists, then the function silently returns. This is
     when no override of the settings is desired.
-    """
-    if not os.path.exists(cfgpath):
-        return # no local configuration found
-    cfg = yaml.safe_load(open(cfgpath))
 
-    env.update(cfg)
+    If `cfgpath` is a list, then the items are checked sequentially and loaded
+    if each exists.
+    """
+    # Normalize the input types
+    if type(cfgpath)!=list:
+        cfgpath=[cfgpath]
+
+    # Existing paths only
+    cfgpath = filter(lambda mycfgpath: os.path.exists(mycfgpath), cfgpath)
+
+    # Loop and load!
+    for mycfgpath in cfgpath:
+        cfg = yaml.safe_load(open(mycfgpath))
+        env.update(cfg)
