@@ -1,4 +1,4 @@
-0.0.2 (upcoming):
+0.0.2:
     - `local.load_settings` now supports a list of configuration files.
     - Add missing pyyaml dependency.
     - Improve documentation of the modules.
